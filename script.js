@@ -22,24 +22,35 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Accordion behavior for top-level sections on mobile
+  // Accordion behavior - expand/collapse on click
   function setupSectionToggle() {
     menuSections.forEach(section => {
       const toggle = section.querySelector(".menu-link");
       if (!toggle) return;
 
-      toggle.addEventListener("click", (e) => {
-        if (window.innerWidth <= 768) {
-          e.preventDefault();
-          const isOpen = section.classList.toggle("open");
-          toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+      toggle.setAttribute("aria-expanded", "false");
 
-          // Close others
+      toggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        
+        const isOpen = section.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+
+        const arrow = toggle.querySelector(".arrow-icon");
+        if (arrow) {
+          arrow.classList.toggle("rotated");
+        }
+
+        if (window.innerWidth > 768) {
           menuSections.forEach(s => {
             if (s !== section) {
               s.classList.remove("open");
               const t = s.querySelector(".menu-link");
-              if (t) t.setAttribute("aria-expanded", "false");
+              const arr = t ? t.querySelector(".arrow-icon") : null;
+              if (t) {
+                t.setAttribute("aria-expanded", "false");
+                if (arr) arr.classList.remove("rotated");
+              }
             }
           });
         }
@@ -48,11 +59,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   setupSectionToggle();
+  
   window.addEventListener("resize", () => {
     if (window.innerWidth > 768) {
       sidebar.classList.remove("active");
       menuToggle.setAttribute("aria-expanded", "false");
-      menuSections.forEach(s => s.classList.remove("open"));
+      
+      menuSections.forEach(s => {
+        s.classList.remove("open");
+        const t = s.querySelector(".menu-link");
+        const arr = t ? t.querySelector(".arrow-icon") : null;
+        if (t) {
+          t.setAttribute("aria-expanded", "false");
+          if (arr) arr.classList.remove("rotated");
+        }
+      });
     }
   });
 
@@ -66,12 +87,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const render = (id, items) => {
         const ul = document.getElementById(id);
         if (!ul) return;
-        ul.innerHTML = ""; // clear
+        ul.innerHTML = "";
 
-        // Lọc bỏ các item bị trống tên hoặc link
-        const validItems = items.filter(item => item.name && item.name.trim() !== "");
+        if (!Array.isArray(items)) return;
 
-        validItems.forEach((item) => {
+        items.forEach((item) => {
           const li = document.createElement("li");
           li.className = "tablinks";
           li.setAttribute("role", "none");
@@ -80,9 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
           a.setAttribute("role", "menuitem");
           a.setAttribute("tabindex", "0");
           a.href = item.link || "#";
-          if (item.link && item.link !== "#") {
-            a.target = "_blank";
-          }
+          if (item.link && item.link !== "#") a.target = "_blank";
           a.rel = "noopener noreferrer";
 
           const iconSpan = document.createElement("span");
@@ -93,27 +111,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
           const textSpan = document.createElement("span");
           textSpan.className = "menu-text";
-          textSpan.textContent = item.name;
+          textSpan.textContent = item.name || "Untitled";
 
           a.appendChild(iconSpan);
           a.appendChild(textSpan);
 
-          // Click handler
-          a.addEventListener("click", (e) => {
+          if (item.badge) {
+            const badge = document.createElement("span");
+            badge.className = "menu-badge";
+            badge.textContent = item.badge;
+            a.appendChild(badge);
+          }
+
+          a.addEventListener("click", () => {
             ul.querySelectorAll(".tablinks").forEach(n => n.classList.remove("active"));
             li.classList.add("active");
 
             if (window.innerWidth <= 768) {
               sidebar.classList.remove("active");
               menuToggle.setAttribute("aria-expanded", "false");
-            }
-
-            if (a.target !== "_blank") {
-              e.preventDefault();
-              const newsBox = document.querySelector(".news-box");
-              if (newsBox) {
-                newsBox.innerHTML = `<h1>${item.name}</h1><p><a href="${item.link}" target="_blank">Xem liên kết tại đây</a></p>`;
-              }
             }
           });
 
@@ -122,11 +138,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
       };
 
-      // Đổ dữ liệu tương ứng với cấu trúc trong JSON
-      if (Array.isArray(data.phim_1)) render("menu-phim-1", data.phim_1);
-      if (Array.isArray(data.phim_2)) render("menu-phim-2", data.phim_2);
-      if (Array.isArray(data.phim_3)) render("menu-phim-3", data.phim_3);
-      if (Array.isArray(data.phim_4)) render("menu-phim-4", data.phim_4);
+      // Đầy đủ từ kinh_1 đến kinh_7 khớp với JSON mới
+      render("menu-kinh-1", data.kinh_1);
+      render("menu-kinh-2", data.kinh_2);
+      render("menu-kinh-3", data.kinh_3);
+      render("menu-kinh-4", data.kinh_4);
+      render("menu-kinh-5", data.kinh_5);
+      render("menu-kinh-6", data.kinh_6);
+      render("menu-kinh-7", data.kinh_7);
 
     } catch (err) {
       console.error("Lỗi load menu:", err);
