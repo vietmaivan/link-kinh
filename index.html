@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Link kinh</title>
+
+  <!-- Font Awesome cho icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<header>
+  <div class="marquee-container" aria-hidden="true">
+    <div class="marquee-text">LINK KINH</div>
+  </div>
+
+  <button id="menu-toggle" class="menu-toggle-btn" aria-expanded="false" aria-controls="sidebar">
+    <i class="fas fa-bars"></i> Menu
+  </button>
+</header>
+
+<div class="container">
+  <nav class="sidebar" id="sidebar" aria-label="Chức năng chính">
+    <ul id="menu">
+      <!-- Mục 1 -->
+      <li class="menu-item menu-section">
+        <button class="menu-link" aria-expanded="false" aria-controls="menu-phim-1">
+          <span class="menu-title">PHẦN 1: QUÁN NIỆM & TÂM LÝ</span>
+          <i class="fas fa-chevron-down arrow-icon" aria-hidden="true"></i>
+        </button>
+        <ul class="sub-menu" id="menu-phim-1" role="menu"></ul>
+      </li>
+
+      <!-- Mục 2 -->
+      <li class="menu-item menu-section">
+        <button class="menu-link" aria-expanded="false" aria-controls="menu-phim-2">
+          <span class="menu-title">PHẦN 2: CƯ SĨ & ĐẠO ĐỨC</span>
+          <i class="fas fa-chevron-down arrow-icon" aria-hidden="true"></i>
+        </button>
+        <ul class="sub-menu" id="menu-phim-2" role="menu"></ul>
+      </li>
+
+      <!-- Mục 3 -->
+      <li class="menu-item menu-section">
+        <button class="menu-link" aria-expanded="false" aria-controls="menu-phim-3">
+          <span class="menu-title">PHẦN 3: BUÔNG XẢ & THIỀN ĐỊNH</span>
+          <i class="fas fa-chevron-down arrow-icon" aria-hidden="true"></i>
+        </button>
+        <ul class="sub-menu" id="menu-phim-3" role="menu"></ul>
+      </li>
+
+      <!-- Mục 4 -->
+      <li class="menu-item menu-section">
+        <button class="menu-link" aria-expanded="false" aria-controls="menu-phim-4">
+          <span class="menu-title">PHẦN 4: KINH NIKAYA</span>
+          <i class="fas fa-chevron-down arrow-icon" aria-hidden="true"></i>
+        </button>
+        <ul class="sub-menu" id="menu-phim-4" role="menu"></ul>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="main-content" id="main">
+    <div class="hero">
+      <img src="" alt="" class="hero-img">
+    </div>
+
+    <section class="welcome-box">
+      <h1></h1>
+      <h2 class="subhead"></h2>
+      <p>Hãy chọn một danh mục bên trái (hoặc bấm nút "Menu" ở phía trên nếu bạn dùng điện thoại) để bắt đầu xem.</p>
+    </section>
+
+    <section class="news-box">
+      <h1></h1>
+      <p></p>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <h3>MAI VIỆT</h3>
+  <p></p>
+  <p>Hotline: 0937 551 868</p>
+  <div class="socials">
+    <a href="https://www.facebook.com/profile.php?id=61572840754253" target="_blank" rel="noopener noreferrer">Võ đường Mai Việt</a>
+    <a href="https://www.youtube.com/@maivviet" target="_blank" rel="noopener noreferrer">YouTube</a>
+    <a href="https://zalo.me/0937551868" target="_blank" rel="noopener noreferrer">Zalo</a>
+  </div>
+  <p class="copyright">© 2026 Mai Việt. All rights reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
